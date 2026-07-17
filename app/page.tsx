@@ -4,144 +4,201 @@
 import MessageScroller from "@/components/ui/message-scroller"
 import Bubble from "@/components/ui/bubble"
 import { ArrowUpIcon, ImageIcon, MicIcon } from "lucide-react";
+import { Message  } from "@/components/message";
 
 import InputGroup from "@/components/ui/input-group";
+import type { Message as MessageType } from "@/schemas/message";
 
 
-const messages = [
+const messages: MessageType[] = [
   {
     id: "1",
-    role: "assistant",
-    content: "Olá! Como posso ajudar você hoje?",
+    sender: "other",
+    name: "Ana",
+    profile_picture: "https://i.pravatar.cc/150?img=32",
+    type: "text",
+    content: "Oi! Você conseguiu terminar aquele projeto?",
   },
   {
     id: "2",
-    role: "user",
-    content: "Quero testar o MessageScroller.",
+    sender: "myself",
+    name: "Você",
+    type: "text",
+    content: "Quase. Falta só revisar alguns detalhes.",
   },
   {
     id: "3",
-    role: "assistant",
-    content:
-      "Perfeito! Vamos adicionar algumas mensagens para simular uma conversa.",
+    sender: "other",
+    name: "Ana",
+    type: "text",
+    content: "Boa! Achei que você já tinha entregue.",
   },
   {
     id: "4",
-    role: "user",
-    content: "Legal, obrigado!",
+    sender: "myself",
+    name: "Você",
+    profile_picture: "https://i.pravatar.cc/150?img=12",
+    type: "text",
+    content: "Vou enviar ainda hoje, se tudo der certo.",
   },
   {
     id: "5",
-    role: "assistant",
-    content: "De nada! 🚀",
+    sender: "other",
+    name: "Ana",
+    type: "text",
+    content: "Perfeito! Depois me mostra como ficou.",
   },
   {
     id: "6",
-    role: "user",
-    content: "Será que o scroll acompanha novas mensagens automaticamente?",
+    sender: "myself",
+    name: "Você",
+    type: "text",
+    content: "Pode deixar! 😄",
   },
   {
     id: "7",
-    role: "assistant",
-    content:
-      "Sim, esse é um comportamento comum em interfaces de chat. Basta rolar para o final quando uma nova mensagem for adicionada.",
+    sender: "other",
+    name: "Ana",
+    type: "text",
+    content: "Aliás, você vai participar da reunião amanhã?",
   },
   {
     id: "8",
-    role: "user",
-    content: "E se o usuário subir para ler mensagens antigas?",
+    sender: "myself",
+    name: "Você",
+    type: "text",
+    content: "Sim, às 9h, né?",
   },
   {
     id: "9",
-    role: "assistant",
-    content:
-      "Nesse caso, normalmente o scroll automático é desabilitado até que o usuário volte para o final da conversa.",
+    sender: "other",
+    name: "Ana",
+    profile_picture: "https://i.pravatar.cc/150?img=32",
+    type: "text",
+    content: "Isso mesmo. O pessoal vai apresentar as novidades do sistema.",
   },
   {
     id: "10",
-    role: "user",
-    content: "Faz sentido. Vou implementar isso depois.",
+    sender: "myself",
+    name: "Você",
+    type: "text",
+    content: "Legal, estou curioso para ver.",
   },
   {
     id: "11",
-    role: "assistant",
-    content: "Boa ideia! Isso melhora bastante a experiência do usuário.",
+    sender: "other",
+    name: "Ana",
+    type: "image",
+    content: "https://picsum.photos/600/400?random=1",
   },
   {
     id: "12",
-    role: "user",
-    content: "Também quero testar mensagens bem longas.",
+    sender: "other",
+    name: "Ana",
+    type: "text",
+    content: "Olha o layout novo que o designer enviou.",
   },
   {
     id: "13",
-    role: "assistant",
-    content:
-      "Uma mensagem longa é útil para verificar quebra de linha, espaçamento, largura máxima do balão e comportamento do scroll. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer volutpat, nisi nec vulputate faucibus, turpis libero ultrices mauris, vitae tincidunt augue nisl non nunc. Suspendisse potenti. Donec euismod, augue sed posuere tincidunt, lacus justo feugiat justo, quis pretium nisl elit sed massa.",
+    sender: "myself",
+    name: "Você",
+    type: "text",
+    content: "Ficou muito bonito! Gostei bastante das cores.",
   },
   {
     id: "14",
-    role: "user",
-    content: "Agora vou adicionar várias mensagens seguidas.",
+    sender: "other",
+    name: "Ana",
+    profile_picture: "https://i.pravatar.cc/150?img=32",
+    type: "audio",
+    content: "audio-message-01.mp3",
   },
   {
     id: "15",
-    role: "assistant",
-    content: "Perfeito!",
+    sender: "myself",
+    name: "Você",
+    type: "text",
+    content: "Depois escuto o áudio. Estou em uma reunião agora.",
   },
   {
     id: "16",
-    role: "assistant",
-    content: "Mensagem de teste #1",
+    sender: "other",
+    name: "Ana",
+    type: "text",
+    content: "Sem problemas!",
   },
   {
     id: "17",
-    role: "assistant",
-    content: "Mensagem de teste #2",
+    sender: "myself",
+    name: "Você",
+    profile_picture: "https://i.pravatar.cc/150?img=12",
+    type: "text",
+    content: "Agora consegui ouvir. Faz sentido o que você comentou.",
   },
   {
     id: "18",
-    role: "assistant",
-    content: "Mensagem de teste #3",
+    sender: "other",
+    name: "Ana",
+    type: "text",
+    content: "Ótimo! Então seguimos com essa ideia.",
   },
   {
     id: "19",
-    role: "assistant",
-    content: "Mensagem de teste #4",
+    sender: "myself",
+    name: "Você",
+    type: "text",
+    content: "Fechado. Vou abrir uma PR daqui a pouco.",
   },
   {
     id: "20",
-    role: "assistant",
-    content: "Mensagem de teste #5",
+    sender: "other",
+    name: "Ana",
+    type: "text",
+    content: "Quando abrir, me marca para revisar.",
   },
   {
     id: "21",
-    role: "user",
-    content: "Ainda está funcionando direitinho.",
+    sender: "myself",
+    name: "Você",
+    type: "text",
+    content: "Combinado 👍",
   },
   {
     id: "22",
-    role: "assistant",
-    content: "Ótimo! Continue adicionando mensagens para testar listas maiores.",
+    sender: "other",
+    name: "Ana",
+    profile_picture: "https://i.pravatar.cc/150?img=32",
+    type: "image",
+    content: "https://picsum.photos/500/700?random=2",
   },
   {
     id: "23",
-    role: "user",
-    content: "Vou chegar em umas 50 mensagens.",
+    sender: "other",
+    name: "Ana",
+    type: "text",
+    content: "Também tirei essa foto hoje cedo.",
   },
   {
     id: "24",
-    role: "assistant",
-    content: "Excelente. Assim você consegue validar performance e virtualização, se existir.",
+    sender: "myself",
+    name: "Você",
+    type: "text",
+    content: "Nossa, ficou muito boa! Parece papel de parede.",
   },
   {
     id: "25",
-    role: "user",
-    content: "Obrigado pela ajuda!",
+    sender: "other",
+    name: "Ana",
+    type: "text",
+    content: "Hahaha, valeu!",
   },
   {
     id: "26",
-    role: "assistant",
-    content: "Sempre que precisar. Bons testes! 🚀",
+    sender: "myself",
+    name: "Você",
+    profile_picture: "https://i.pravatar.cc/150?img=12",
+    type: "text",
+    content: "Bom, vou voltar ao trabalho. Até mais!",
   },
 ];
 
@@ -154,18 +211,7 @@ export default function Page() {
             <MessageScroller.Viewport>
               <MessageScroller.Content className="pt-4 pb-20">
                 {messages.map((message) => (
-                  <MessageScroller.Item
-                    key={message.id}
-                    messageId={message.id}
-                    scrollAnchor={message.role === "user"}
-                    className="w-full"
-                  >
-                    <Bubble.Root className="w-full max-w-full" align={message.role === "user" ? "end" : "start"} variant={message.role === "user" ? "default" : "tinted"}>
-                      <Bubble.Content className="max-w-1/2">
-                        {message.content}
-                      </Bubble.Content>
-                    </Bubble.Root>
-                  </MessageScroller.Item>
+                  <Message key={message.id} message={message} />
                 ))}
               </MessageScroller.Content>
             </MessageScroller.Viewport>
