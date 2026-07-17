@@ -3,6 +3,10 @@
 //* Components imports
 import MessageScroller from "@/components/ui/message-scroller"
 import Bubble from "@/components/ui/bubble"
+import { ArrowUpIcon, ImageIcon, MicIcon } from "lucide-react";
+
+import InputGroup from "@/components/ui/input-group";
+
 
 const messages = [
   {
@@ -146,7 +150,7 @@ export default function Page() {
     <div className="flex flex-col min-h-svh w-full justify-center items-center">
       <div className="w-full max-w-7xl h-svh">
         <MessageScroller.Provider autoScroll>
-          <MessageScroller.Root className="w-full">
+          <MessageScroller.Root className="w-full h-[calc(100%-3.3rem)]">
             <MessageScroller.Viewport>
               <MessageScroller.Content className="pt-4 pb-20">
                 {messages.map((message) => (
@@ -168,6 +172,50 @@ export default function Page() {
             <MessageScroller.Button />
           </MessageScroller.Root>
         </MessageScroller.Provider>
+        
+        <InputGroup.Root>
+          <InputGroup.Addon align="block-end" className="pt-2">
+            <div className="flex w-full justify-between">
+              <div className="flex flex-row gap-4 items-center">
+                <InputGroup.Button
+                  type="button"
+                  variant="default"
+                  size="icon-sm"
+                  // disabled={disabled}
+                  className="ml-auto"
+                >
+                  <ImageIcon />
+                  <span className="sr-only">Foto</span>
+                </InputGroup.Button>
+                <div className=" flex items center">
+                  <InputGroup.Input placeholder="Digite uma mensagem..." />
+                </div>
+              </div>
+              <div className="flex gap-2">
+                <InputGroup.Button
+                  type="button"
+                  variant="default"
+                  size="icon-sm"
+                  // disabled={disabled}
+                  className="ml-auto"
+                >
+                  <MicIcon />
+                  <span className="sr-only">Audio</span>
+                </InputGroup.Button>
+                <InputGroup.Button
+                  type="button"
+                  variant="default"
+                  size="icon-sm"
+                  // disabled={disabled}
+                  className="ml-auto"
+                >
+                  <ArrowUpIcon />
+                  <span className="sr-only">Send</span>
+                </InputGroup.Button>
+              </div>
+            </div>
+          </InputGroup.Addon>
+        </InputGroup.Root>
       </div>
 
     </div>
