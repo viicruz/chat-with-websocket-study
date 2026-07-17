@@ -12,8 +12,9 @@ type MessageProps = {
 export function Message(props: MessageProps) {
 
   const { message } = props;
+  const profilePicture = message.profile_picture || "https://i.pravatar.cc/150?img=32";
 
-  if(message.type === "image"){
+  if (message.type === "image") {
     return (
       <MessageScroller.Item
         key={message.id}
@@ -22,14 +23,14 @@ export function Message(props: MessageProps) {
         className="w-full"
       >
         <Bubble.Root className="w-full max-w-full" align={message.sender === "myself" ? "end" : "start"} variant={message.sender === "myself" ? "default" : "tinted"}>
-          <Bubble.Content className="max-w-1/2">
+          <Bubble.Content className="max-w-1/2 p-0">
             <img src={message.content} alt="Mensagem de imagem" className="max-w-full h-auto" />
           </Bubble.Content>
         </Bubble.Root>
       </MessageScroller.Item>
     )
   }
-  if(message.type === "audio"){
+  if (message.type === "audio") {
     return (
       <MessageScroller.Item
         key={message.id}
@@ -51,9 +52,21 @@ export function Message(props: MessageProps) {
         key={message.id}
         messageId={message.id}
         scrollAnchor={message.sender === "myself"}
-        className="w-full"
+        className="w-full flex flex-row gap-3"
       >
+        {
+          message.sender === "other" && (
+            <span>
+              <img className="size-8 rounded-full" src={profilePicture} alt="Foto do usuário" />
+            </span>
+          )
+        }
         <Bubble.Root className="w-full max-w-full" align={message.sender === "myself" ? "end" : "start"} variant={message.sender === "myself" ? "default" : "tinted"}>
+          {
+            message.sender === "other" && (
+              <span>{props.message.name}</span>
+            )
+          }
           <Bubble.Content className="max-w-1/2">
             {message.content}
           </Bubble.Content>
