@@ -20,9 +20,23 @@ export function Message(props: MessageProps) {
         key={message.id}
         messageId={message.id}
         scrollAnchor={message.sender === "myself"}
-        className="w-full"
+        className="w-full flex flex-row gap-3"
       >
+        {
+          message.sender === "other" && (
+            <span>
+              <img className="size-8 rounded-full" src={profilePicture} alt="Foto do usuário" />
+            </span>
+          )
+        }
         <Bubble.Root className="w-full max-w-full" align={message.sender === "myself" ? "end" : "start"} variant={message.sender === "myself" ? "default" : "tinted"}>
+
+          {
+            message.sender === "other" && (
+              <span>{props.message.name}</span>
+            )
+          }
+
           <Bubble.Content className="max-w-1/2 p-0">
             <img src={message.content} alt="Mensagem de imagem" className="max-w-full h-auto" />
           </Bubble.Content>
@@ -36,9 +50,21 @@ export function Message(props: MessageProps) {
         key={message.id}
         messageId={message.id}
         scrollAnchor={message.sender === "myself"}
-        className="w-full"
+        className="w-full flex flex-row gap-3"
       >
+        {
+          message.sender === "other" && (
+            <span>
+              <img className="size-8 rounded-full" src={profilePicture} alt="Foto do usuário" />
+            </span>
+          )
+        }
         <Bubble.Root className="w-full max-w-full" align={message.sender === "myself" ? "end" : "start"} variant={message.sender === "myself" ? "default" : "tinted"}>
+          {
+            message.sender === "other" && (
+              <span>{props.message.name}</span>
+            )
+          }
           <Bubble.Content className="max-w-1/2">
             <audio src={message.content} controls />
           </Bubble.Content>
