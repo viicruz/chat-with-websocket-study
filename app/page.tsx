@@ -2,7 +2,6 @@
 
 //* Components imports
 import MessageScroller from "@/components/ui/message-scroller"
-import Bubble from "@/components/ui/bubble"
 import { ArrowUpIcon, ImageIcon, MicIcon } from "lucide-react";
 import { Message  } from "@/components/message";
 
