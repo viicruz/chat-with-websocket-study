@@ -3,6 +3,9 @@ import { Elysia } from "elysia"
 import { z } from "zod"
 import { cors } from '@elysia/cors'
 
+//* Utils imports
+import { mockMessages } from "@/utils/mock-messages"
+
 const app = new Elysia()
   .use(cors())
   .get("/", () => "Hello Elysia")
@@ -20,6 +23,9 @@ const app = new Elysia()
       }),
     }
   )
+  .get("/messages-history", () => {
+    return mockMessages
+  });
 
 app.listen(3001)
 
