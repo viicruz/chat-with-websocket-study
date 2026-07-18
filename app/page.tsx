@@ -1,12 +1,18 @@
 'use client';
+//* Libraries imports
+import React from "react"
+
 
 //* Components imports
 import MessageScroller from "@/components/ui/message-scroller"
 import { ArrowUpIcon, ImageIcon, MicIcon } from "lucide-react";
-import { Message  } from "@/components/message";
+import { Message } from "@/components/message";
 
 import InputGroup from "@/components/ui/input-group";
 import type { Message as MessageType } from "@/schemas/message";
+
+//* Hooks imports
+import { useSendMessage } from "@/hooks/message/use-send-message";
 
 
 const messages: MessageType[] = [
@@ -202,6 +208,21 @@ const messages: MessageType[] = [
 ];
 
 export default function Page() {
+  const [message, setMessage] = React.useState<string>("");
+  const sendMessage = useSendMessage();
+
+  const handleSendMessage = () => {
+    sendMessage.mutate(message, {
+      onError: () => {
+        console.error("Failed to send message");
+      },
+      onSuccess: () => {
+        console.log("Message sent successfully");
+        setMessage("");
+      },
+    });
+  }
+
   return (
     <div className="flex flex-col min-h-svh w-full justify-center items-center">
       <div className="w-full max-w-7xl h-svh">
@@ -217,7 +238,7 @@ export default function Page() {
             <MessageScroller.Button />
           </MessageScroller.Root>
         </MessageScroller.Provider>
-        
+
         <InputGroup.Root>
           <InputGroup.Addon align="block-end" className="pt-2">
             <div className="flex w-full justify-between">
@@ -233,7 +254,7 @@ export default function Page() {
                   <span className="sr-only">Foto</span>
                 </InputGroup.Button>
                 <div className=" flex items center">
-                  <InputGroup.Input placeholder="Digite uma mensagem..." />
+                  <InputGroup.Input placeholder="Digite uma mensagem..." value={message} onChange={(e) => setMessage(e.target.value)} />
                 </div>
               </div>
               <div className="flex gap-2">
@@ -253,6 +274,7 @@ export default function Page() {
                   size="icon-sm"
                   // disabled={disabled}
                   className="ml-auto"
+                  onClick={handleSendMessage}
                 >
                   <ArrowUpIcon />
                   <span className="sr-only">Send</span>
