@@ -15,6 +15,7 @@ const app = new Elysia()
       console.log("Received message:", request.body.message)
       return {
         status: "success",
+        message: request.body.message,
       }
     },
     {
