@@ -254,7 +254,12 @@ export default function Page() {
                   <span className="sr-only">Foto</span>
                 </InputGroup.Button>
                 <div className=" flex items center">
-                  <InputGroup.Input placeholder="Digite uma mensagem..." value={message} onChange={(e) => setMessage(e.target.value)} />
+                  <form onSubmit={(e) => {
+                    e.preventDefault();
+                    handleSendMessage();
+                  }}>
+                    <InputGroup.Input placeholder="Digite uma mensagem..." value={message} onChange={(e) => setMessage(e.target.value)} />
+                  </form>
                 </div>
               </div>
               <div className="flex gap-2">
