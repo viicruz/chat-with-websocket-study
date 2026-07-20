@@ -6,6 +6,9 @@ import { cors } from '@elysia/cors'
 //* Types imports
 import type { Message } from "@/schemas/message"
 
+//* Utils imports
+import { presence } from "./presence"
+
 const messages = new Set<Message>();
 
 const app = new Elysia()
@@ -24,6 +27,9 @@ const app = new Elysia()
       }
 
       messages.add(message)
+
+      presence.message("Victor", { message: request.body.content, type: request.body.type });
+      
       return {
         status: "success",
         message: request.body.content,
@@ -38,7 +44,20 @@ const app = new Elysia()
   )
   .get("/messages-history", () => {
     return Array.from(messages);
-  });
+  })
+  .ws("/websocket", {
+    open(ws){
+      console.log("WebSocket connection opened");
+      presence.add("Victor", ws.id, ws);
+    },
+    close(ws){
+      console.log("WebSocket connection closed");
+      presence.remove("Victor", ws.id);
+    },
+    response: z.object({
+      message: z.string()
+    })
+  })
 
 app.listen(3001)
 

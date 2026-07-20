@@ -22,4 +22,12 @@ function remove(userId: string, connectionId: string) {
   }
 }
 
-export const presence = { add, remove };
+function message(userId: string, data: unknown) {
+  const connections = onlineUsers.get(userId);
+  if(!connections) return;
+  for (const ws of connections.values()) {
+    ws.send(data);
+  }
+}
+
+export const presence = { add, remove, message };
