@@ -19,13 +19,13 @@ export function useSendMessage() {
       })
       return response.data
     },
-    onSuccess: (props) => {
-      queryClient.setQueryData(["messages-history"], (oldData: MessageType[] | undefined) => {
-        if (!oldData) {
-          return [];
-        }
-        return [...oldData, { id: Date.now().toString(), sender: "myself", content: props?.message, type: "text", name: "Victor" }];
-      });
-    }
+    // onSuccess: (props) => {
+    //   queryClient.setQueryData(["messages-history"], (oldData: MessageType[] | undefined) => {
+    //     if (!oldData) {
+    //       return [];
+    //     }
+    //     return [...oldData, { id: Date.now().toString(), sender: "myself", content: props?.message, type: "text", name: "Victor" }];
+    //   });
+    // }
   })
 }

@@ -28,7 +28,7 @@ const app = new Elysia()
 
       messages.add(message)
 
-      presence.message("Victor", { message: request.body.content, type: request.body.type });
+      presence.message("Victor", message);
 
       return {
         status: "success",

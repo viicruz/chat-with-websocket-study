@@ -13,26 +13,14 @@ import InputGroup from "@/components/ui/input-group";
 //* Hooks imports
 import { useSendMessage } from "@/hooks/message/use-send-message";
 import { useMessageHistory } from "@/hooks/message/use-messages-history";
-
-//*Utils imports
-import { apiClient } from "@/lib/api-client"
+import { useSubscribeMessages } from "@/hooks/message/use-subscribe-messages";
 
 
 export default function Page() {
   const [message, setMessage] = React.useState<string>("");
   const sendMessage = useSendMessage();
   const messageHistory = useMessageHistory();
-
-
-  React.useEffect(() => {
-    const ws = apiClient.websocket.subscribe();
-    ws.on("open", () => { 
-      console.log("WebSocket connection opened");
-    })
-    ws.on("message", (message) => {
-      console.log("Received WebSocket message", message);
-    })
-  }, [])
+  useSubscribeMessages();
 
   const handleSendMessage = () => {
     sendMessage.mutate(message, {
