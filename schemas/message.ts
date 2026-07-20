@@ -11,7 +11,7 @@ export type BaseMessage = z.infer<typeof baseMessageSchema>
 export const messageSchema = baseMessageSchema.extend({
   id: z.string(),
   name: z.string(),
-  sender: z.enum(["myself", "other"]),
+  sender: z.string(),
   profile_picture: z.string().optional(),
 })
 

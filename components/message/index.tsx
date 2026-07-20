@@ -5,12 +5,14 @@ import Bubble from "../ui/bubble";
 import type { Message as MessageType } from "@/schemas/message";
 import MessageScroller from "../ui/message-scroller";
 
+import { useGetUser } from "@/hooks/user/use-get-user";
+
 type MessageProps = {
   message: MessageType;
 }
 
 export function Message(props: MessageProps) {
-
+  const user = useGetUser();
   const { message } = props;
   const profilePicture = message.profile_picture || "https://i.pravatar.cc/150?img=32";
 
@@ -19,20 +21,20 @@ export function Message(props: MessageProps) {
       <MessageScroller.Item
         key={message.id}
         messageId={message.id}
-        scrollAnchor={message.sender === "myself"}
+        scrollAnchor={message.sender === user.data?.id}
         className="w-full flex flex-row gap-3"
       >
         {
-          message.sender === "other" && (
+          message.sender !== user.data?.id && (
             <span>
               <img className="size-8 rounded-full" src={profilePicture} alt="Foto do usuário" />
             </span>
           )
         }
-        <Bubble.Root className="w-full max-w-full" align={message.sender === "myself" ? "end" : "start"} variant={message.sender === "myself" ? "default" : "tinted"}>
+        <Bubble.Root className="w-full max-w-full" align={message.sender === user.data?.id ? "end" : "start"} variant={message.sender === user.data?.id ? "default" : "tinted"}>
 
           {
-            message.sender === "other" && (
+            message.sender !== user.data?.id && (
               <span>{props.message.name}</span>
             )
           }
@@ -49,19 +51,19 @@ export function Message(props: MessageProps) {
       <MessageScroller.Item
         key={message.id}
         messageId={message.id}
-        scrollAnchor={message.sender === "myself"}
+        scrollAnchor={message.sender === user.data?.id}
         className="w-full flex flex-row gap-3"
       >
         {
-          message.sender === "other" && (
+          message.sender !== user.data?.id && (
             <span>
               <img className="size-8 rounded-full" src={profilePicture} alt="Foto do usuário" />
             </span>
           )
         }
-        <Bubble.Root className="w-full max-w-full" align={message.sender === "myself" ? "end" : "start"} variant={message.sender === "myself" ? "default" : "tinted"}>
+        <Bubble.Root className="w-full max-w-full" align={message.sender === user.data?.id ? "end" : "start"} variant={message.sender === user.data?.id ? "default" : "tinted"}>
           {
-            message.sender === "other" && (
+            message.sender !== user.data?.id && (
               <span>{props.message.name}</span>
             )
           }
@@ -77,19 +79,19 @@ export function Message(props: MessageProps) {
       <MessageScroller.Item
         key={message.id}
         messageId={message.id}
-        scrollAnchor={message.sender === "myself"}
+        scrollAnchor={message.sender === user.data?.id}
         className="w-full flex flex-row gap-3"
       >
         {
-          message.sender === "other" && (
+          message.sender !== user.data?.id && (
             <span>
               <img className="size-8 rounded-full" src={profilePicture} alt="Foto do usuário" />
             </span>
           )
         }
-        <Bubble.Root className="w-full max-w-full" align={message.sender === "myself" ? "end" : "start"} variant={message.sender === "myself" ? "default" : "tinted"}>
+        <Bubble.Root className="w-full max-w-full" align={message.sender === user.data?.id ? "end" : "start"} variant={message.sender === user.data?.id ? "default" : "tinted"}>
           {
-            message.sender === "other" && (
+            message.sender !== user.data?.id && (
               <span>{props.message.name}</span>
             )
           }

@@ -6,12 +6,18 @@ import { useMutation } from "@tanstack/react-query"
 //* Utils imports
 import { apiClient } from "@/lib/api-client"
 
+//* Hooks imports
+import { useGetUser } from "@/hooks/user/use-get-user"
+
 export function useSendMessage() {
+  const user = useGetUser();
+
   return useMutation({
     mutationFn: async (message: string) => {
       const response = await apiClient["send-message"].post({
         content: message,
-        type: "text"
+        type: "text",
+        sender: user.data?.id || "",
       })
       return response.data
     },
