@@ -5,10 +5,6 @@ import { useMutation } from "@tanstack/react-query"
 
 //* Utils imports
 import { apiClient } from "@/lib/api-client"
-import { queryClient } from "@/lib/query-client";
-
-//* Types imports
-import type { Message as MessageType } from "@/schemas/message";
 
 export function useSendMessage() {
   return useMutation({
