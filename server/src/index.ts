@@ -4,9 +4,9 @@ import { z } from "zod"
 import { cors } from '@elysia/cors'
 
 //* Types imports
-import type { BaseMessage, Message } from "@/schemas/message"
+import type { Message } from "@/schemas/message"
 
-const messages = new Set<BaseMessage>();
+const messages = new Set<Message>();
 
 const app = new Elysia()
   .use(cors())
