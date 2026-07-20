@@ -15,26 +15,27 @@ export function Message(props: MessageProps) {
   const user = useGetUser();
   const { message } = props;
   const profilePicture = message.profile_picture || "https://i.pravatar.cc/150?img=32";
+  const isMyMessage = user.data?.id === message.sender;
 
   if (message.type === "image") {
     return (
       <MessageScroller.Item
         key={message.id}
         messageId={message.id}
-        scrollAnchor={message.sender === user.data?.id}
+        scrollAnchor={isMyMessage}
         className="w-full flex flex-row gap-3"
       >
         {
-          message.sender !== user.data?.id && (
+          !isMyMessage && (
             <span>
               <img className="size-8 rounded-full" src={profilePicture} alt="Foto do usuário" />
             </span>
           )
         }
-        <Bubble.Root className="w-full max-w-full" align={message.sender === user.data?.id ? "end" : "start"} variant={message.sender === user.data?.id ? "default" : "tinted"}>
+        <Bubble.Root className="w-full max-w-full" align={isMyMessage ? "end" : "start"} variant={isMyMessage ? "default" : "tinted"}>
 
           {
-            message.sender !== user.data?.id && (
+            !isMyMessage && (
               <span>{props.message.name}</span>
             )
           }
@@ -51,19 +52,19 @@ export function Message(props: MessageProps) {
       <MessageScroller.Item
         key={message.id}
         messageId={message.id}
-        scrollAnchor={message.sender === user.data?.id}
+        scrollAnchor={isMyMessage}
         className="w-full flex flex-row gap-3"
       >
         {
-          message.sender !== user.data?.id && (
+          !isMyMessage && (
             <span>
               <img className="size-8 rounded-full" src={profilePicture} alt="Foto do usuário" />
             </span>
           )
         }
-        <Bubble.Root className="w-full max-w-full" align={message.sender === user.data?.id ? "end" : "start"} variant={message.sender === user.data?.id ? "default" : "tinted"}>
+        <Bubble.Root className="w-full max-w-full" align={isMyMessage ? "end" : "start"} variant={isMyMessage ? "default" : "tinted"}>
           {
-            message.sender !== user.data?.id && (
+            !isMyMessage && (
               <span>{props.message.name}</span>
             )
           }
@@ -79,19 +80,19 @@ export function Message(props: MessageProps) {
       <MessageScroller.Item
         key={message.id}
         messageId={message.id}
-        scrollAnchor={message.sender === user.data?.id}
+        scrollAnchor={isMyMessage}
         className="w-full flex flex-row gap-3"
       >
         {
-          message.sender !== user.data?.id && (
+          !isMyMessage && (
             <span>
               <img className="size-8 rounded-full" src={profilePicture} alt="Foto do usuário" />
             </span>
           )
         }
-        <Bubble.Root className="w-full max-w-full" align={message.sender === user.data?.id ? "end" : "start"} variant={message.sender === user.data?.id ? "default" : "tinted"}>
+        <Bubble.Root className="w-full max-w-full" align={isMyMessage ? "end" : "start"} variant={isMyMessage ? "default" : "tinted"}>
           {
-            message.sender !== user.data?.id && (
+            !isMyMessage && (
               <span>{props.message.name}</span>
             )
           }
