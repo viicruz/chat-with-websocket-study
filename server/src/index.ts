@@ -1,7 +1,7 @@
 //* Libraries imports
 import { Elysia } from "elysia"
 import { z } from "zod"
-import { cors } from '@elysia/cors'
+import { cors } from "@elysia/cors"
 
 //* Types imports
 import { type Message, messageSchema } from "@/schemas/message"
@@ -9,7 +9,7 @@ import { type Message, messageSchema } from "@/schemas/message"
 //* Utils imports
 import { presence } from "./presence"
 
-const messages = new Set<Message>();
+const messages = new Set<Message>()
 
 const app = new Elysia()
   .use(cors())
@@ -17,7 +17,7 @@ const app = new Elysia()
   .post(
     "/send-message",
     (request) => {
-      console.log("Received message:", request.body.content);
+      console.log("Received message:", request.body.content)
       const message: Message = {
         id: Date.now().toString(),
         name: "Victor",
@@ -28,7 +28,7 @@ const app = new Elysia()
 
       messages.add(message)
 
-      presence.message("Victor", message);
+      presence.messageAll(message)
 
       return {
         status: "success",
@@ -43,18 +43,22 @@ const app = new Elysia()
     }
   )
   .get("/messages-history", () => {
-    return Array.from(messages);
+    return Array.from(messages)
   })
   .ws("/websocket", {
-    open(ws){
-      console.log("WebSocket connection opened");
-      presence.add("Victor", ws.id, ws);
+    open(ws) {
+      console.log("WebSocket connection opened")
+      presence.add(ws.data.query.userId, ws.id, ws)
+      console.log("query", ws.data.query)
     },
-    close(ws){
-      console.log("WebSocket connection closed");
-      presence.remove("Victor", ws.id);
+    close(ws) {
+      console.log("WebSocket connection closed")
+      presence.remove(ws.data.query.userId, ws.id)
     },
-    response: messageSchema
+    response: messageSchema,
+    body: z.object({
+      id: z.string(),
+    }),
   })
 
 app.listen(3001)

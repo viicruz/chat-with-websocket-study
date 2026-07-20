@@ -10,9 +10,13 @@ import type { Message } from "@/schemas/message"
 import { apiClient } from "@/lib/api-client"
 import { queryClient } from "@/lib/query-client"
 
-export function useSubscribeMessages() {
+export function useSubscribeMessages(userId: string) {
   React.useEffect(() => {
-    const ws = apiClient.websocket.subscribe()
+    const ws = apiClient.websocket.subscribe({
+      query:{
+        userId
+      }
+    })
 
     ws.on("open", () => {
       console.log("WebSocket connection opened")

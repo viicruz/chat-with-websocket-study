@@ -9,11 +9,11 @@ export function useGetUser() {
     queryFn: async () => {
       const username = localStorage.getItem("username")
       if (!username) {
-        throw new Error("Username not found in localStorage")
+        return null;
       }
       const userId = localStorage.getItem("userId")
       if (!userId) {
-        throw new Error("User ID not found in localStorage")
+        return null;
       }
       return {
         id: userId,

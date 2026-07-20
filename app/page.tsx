@@ -5,31 +5,30 @@ import React from "react"
 
 //* Components imports
 import MessageScroller from "@/components/ui/message-scroller"
-import { ArrowUpIcon, ImageIcon, MicIcon } from "lucide-react";
-import { Message } from "@/components/message";
-
-import InputGroup from "@/components/ui/input-group";
+import { MessageHistory } from "@/components/message-history";
+import { MessageInput } from "@/components/message-input";
+import Dialog from "@/components/ui/dialog";
 
 //* Hooks imports
-import { useSendMessage } from "@/hooks/message/use-send-message";
-import { useMessageHistory } from "@/hooks/message/use-messages-history";
-import { useSubscribeMessages } from "@/hooks/message/use-subscribe-messages";
-
+import { useGetUser } from "@/hooks/user/use-get-user";
+import { useSetUser } from "@/hooks/user/use-set-user";
+import { Button, Input } from "@base-ui/react";
 
 export default function Page() {
-  const [message, setMessage] = React.useState<string>("");
-  const sendMessage = useSendMessage();
-  const messageHistory = useMessageHistory();
-  useSubscribeMessages();
+  const setUser = useSetUser();
+  const user = useGetUser();
 
-  const handleSendMessage = () => {
-    sendMessage.mutate(message, {
+  const [open, setOpen] = React.useState<boolean>(true);
+  const [username, setUsername] = React.useState<string>("");
+
+  const handleSetUser = () => {
+    setUser.mutate(username, {
       onError: () => {
-        console.error("Failed to send message");
+        console.error("Failed to set user");
       },
       onSuccess: () => {
-        console.log("Message sent successfully");
-        setMessage("");
+        console.log("User set successfully");
+        setOpen(false);
       },
     });
   }
@@ -40,67 +39,31 @@ export default function Page() {
         <MessageScroller.Provider autoScroll>
           <MessageScroller.Root className="w-full h-[calc(100%-3.3rem)]">
             <MessageScroller.Viewport>
-              <MessageScroller.Content className="pt-4 pb-20">
-                {messageHistory.data?.map((message) => (
-                  <Message key={message.id} message={message} />
-                ))}
-              </MessageScroller.Content>
+              <MessageHistory />
             </MessageScroller.Viewport>
             <MessageScroller.Button />
           </MessageScroller.Root>
         </MessageScroller.Provider>
-
-        <InputGroup.Root>
-          <InputGroup.Addon align="block-end" className="pt-2">
-            <div className="flex w-full justify-between">
-              <div className="flex flex-row gap-4 items-center">
-                <InputGroup.Button
-                  type="button"
-                  variant="default"
-                  size="icon-sm"
-                  // disabled={disabled}
-                  className="ml-auto"
-                >
-                  <ImageIcon />
-                  <span className="sr-only">Foto</span>
-                </InputGroup.Button>
-                <div className=" flex items center">
-                  <form onSubmit={(e) => {
-                    e.preventDefault();
-                    handleSendMessage();
-                  }}>
-                    <InputGroup.Input placeholder="Digite uma mensagem..." value={message} onChange={(e) => setMessage(e.target.value)} />
-                  </form>
-                </div>
-              </div>
-              <div className="flex gap-2">
-                <InputGroup.Button
-                  type="button"
-                  variant="default"
-                  size="icon-sm"
-                  // disabled={disabled}
-                  className="ml-auto"
-                >
-                  <MicIcon />
-                  <span className="sr-only">Audio</span>
-                </InputGroup.Button>
-                <InputGroup.Button
-                  type="button"
-                  variant="default"
-                  size="icon-sm"
-                  // disabled={disabled}
-                  className="ml-auto"
-                  onClick={handleSendMessage}
-                >
-                  <ArrowUpIcon />
-                  <span className="sr-only">Send</span>
-                </InputGroup.Button>
-              </div>
-            </div>
-          </InputGroup.Addon>
-        </InputGroup.Root>
+        <MessageInput />
       </div>
-
+      <Dialog.Root open={open} onOpenChange={setOpen}>
+        <Dialog.Content>
+          <Dialog.Header>
+            <Dialog.Title>Digite seu nome de usuário</Dialog.Title>
+            <Dialog.Description>
+              Este nome será usado para identificar você no chat.
+            </Dialog.Description>
+          </Dialog.Header>
+          <div>
+            <Input value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Digite seu nome de usuário" />
+          </div>
+          <Dialog.Footer>
+            <Button type="button" onClick={handleSetUser}>
+              Confirmar
+            </Button>
+          </Dialog.Footer>
+        </Dialog.Content>
+      </Dialog.Root>
     </div>
   )
 }

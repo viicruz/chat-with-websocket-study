@@ -30,4 +30,12 @@ function message(userId: string, data: unknown) {
   }
 }
 
-export const presence = { add, remove, message };
+function messageAll(data: unknown){
+  for (const connections of onlineUsers.values()) {
+    for (const ws of connections.values()) {
+      ws.send(data);
+    }
+  }
+}
+
+export const presence = { add, remove, message, messageAll };
