@@ -4,7 +4,7 @@ import { z } from "zod"
 import { cors } from '@elysia/cors'
 
 //* Types imports
-import type { Message } from "@/schemas/message"
+import { type Message, messageSchema } from "@/schemas/message"
 
 //* Utils imports
 import { presence } from "./presence"
@@ -29,7 +29,7 @@ const app = new Elysia()
       messages.add(message)
 
       presence.message("Victor", { message: request.body.content, type: request.body.type });
-      
+
       return {
         status: "success",
         message: request.body.content,
@@ -54,9 +54,7 @@ const app = new Elysia()
       console.log("WebSocket connection closed");
       presence.remove("Victor", ws.id);
     },
-    response: z.object({
-      message: z.string()
-    })
+    response: messageSchema
   })
 
 app.listen(3001)
