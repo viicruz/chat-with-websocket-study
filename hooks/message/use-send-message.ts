@@ -14,7 +14,8 @@ export function useSendMessage() {
   return useMutation({
     mutationFn: async (message: string) => {
       const response = await apiClient["send-message"].post({
-        message,
+        content: message,
+        type: "text"
       })
       return response.data
     },

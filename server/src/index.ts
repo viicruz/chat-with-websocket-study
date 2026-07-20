@@ -3,8 +3,10 @@ import { Elysia } from "elysia"
 import { z } from "zod"
 import { cors } from '@elysia/cors'
 
-//* Utils imports
-import { mockMessages } from "@/utils/mock-messages"
+//* Types imports
+import type { BaseMessage, Message } from "@/schemas/message"
+
+const messages = new Set<BaseMessage>();
 
 const app = new Elysia()
   .use(cors())
@@ -12,20 +14,30 @@ const app = new Elysia()
   .post(
     "/send-message",
     (request) => {
-      console.log("Received message:", request.body.message)
+      console.log("Received message:", request.body.content);
+      const message: Message = {
+        id: Date.now().toString(),
+        name: "Victor",
+        sender: "myself",
+        content: request.body.content,
+        type: request.body.type,
+      }
+
+      messages.add(message)
       return {
         status: "success",
-        message: request.body.message,
+        message: request.body.content,
       }
     },
     {
       body: z.object({
-        message: z.string().min(1, "Message cannot be empty"),
+        content: z.string().min(1, "Message cannot be empty"),
+        type: z.enum(["text", "image", "audio"]),
       }),
     }
   )
   .get("/messages-history", () => {
-    return mockMessages
+    return Array.from(messages);
   });
 
 app.listen(3001)
