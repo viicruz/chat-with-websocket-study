@@ -2,6 +2,7 @@
 import { Elysia } from "elysia"
 import { z } from "zod"
 import { cors } from "@elysia/cors"
+import { staticPlugin } from "@elysia/static"
 
 //* Types imports
 import { type Message, messageSchema } from "@/schemas/message"
@@ -13,6 +14,7 @@ const messages = new Set<Message>()
 
 const app = new Elysia()
   .use(cors())
+  .use(staticPlugin())
   .get("/", () => "Hello Elysia")
   .post(
     "/send-message",

@@ -14,7 +14,7 @@ type MessageProps = {
 export function Message(props: MessageProps) {
   const user = useGetUser();
   const { message } = props;
-  const profilePicture = message.profile_picture || "https://i.pravatar.cc/150?img=32";
+  const profilePicture = message.profile_picture || "http://localhost:3001/public/default_user.png";
   const isMyMessage = user.data?.id === message.sender;
 
   if (message.type === "image") {

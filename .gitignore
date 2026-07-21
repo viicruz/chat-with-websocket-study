@@ -31,6 +31,9 @@ pnpm-debug.log*
 # env files (can opt-in for committing if needed)
 .env*
 
+#server
+/server/public/*
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
