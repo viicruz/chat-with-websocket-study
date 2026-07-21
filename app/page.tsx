@@ -22,6 +22,11 @@ export default function Page() {
   const [username, setUsername] = React.useState<string>("");
 
   const handleSetUser = () => {
+    const trimmedUsername = username.trim();
+    if (trimmedUsername.length === 0) {
+      alert("username cannot be empty");
+      return;
+    }
     setUser.mutate(username, {
       onError: () => {
         console.error("Failed to set user");
@@ -31,6 +36,10 @@ export default function Page() {
         setOpen(false);
       },
     });
+  }
+
+  const handleCloseModal = () => {
+    return
   }
 
   React.useEffect(() => {
@@ -54,8 +63,8 @@ export default function Page() {
         </MessageScroller.Provider>
         <MessageInput />
       </div>
-      <Dialog.Root open={open} onOpenChange={setOpen}>
-        <Dialog.Content>
+      <Dialog.Root open={open} onOpenChange={handleCloseModal}>
+        <Dialog.Content showCloseButton={false}>
           <Dialog.Header>
             <Dialog.Title>Digite seu nome de usuário</Dialog.Title>
             <Dialog.Description>
