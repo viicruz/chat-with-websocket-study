@@ -18,7 +18,7 @@ export default function Page() {
   const setUser = useSetUser();
   const user = useGetUser();
 
-  const [open, setOpen] = React.useState<boolean>(true);
+  const [open, setOpen] = React.useState<boolean>(false);
   const [username, setUsername] = React.useState<string>("");
 
   const handleSetUser = () => {
@@ -32,6 +32,14 @@ export default function Page() {
       },
     });
   }
+
+  React.useEffect(() => {
+    if (!user.data && !user.isLoading) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setOpen(true);
+      console.log("User not set, opening dialog", user.data);
+    }
+  }, [user.data, user.isLoading]);
 
   return (
     <div className="flex flex-col min-h-svh w-full justify-center items-center">
