@@ -9,6 +9,7 @@ import type { Message } from "@/schemas/message"
 //* Utils imports
 import { apiClient } from "@/lib/api-client"
 import { queryClient } from "@/lib/query-client"
+import { backendPath } from "@/utils/backend-path"
 
 export function useSubscribeMessages(userId: string) {
   React.useEffect(() => {
@@ -38,7 +39,7 @@ export function useSubscribeMessages(userId: string) {
               content: message.data.content,
               type: message.data.type,
               name: message.data.name,
-              profile_picture: message.data.profile_picture || "/public/default_user.png",
+              profile_picture: message.data.profile_picture || backendPath("/public/default_user.png"),
             },
           ]
         }

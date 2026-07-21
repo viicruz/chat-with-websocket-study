@@ -4,6 +4,7 @@
 import Bubble from "../ui/bubble";
 import type { Message as MessageType } from "@/schemas/message";
 import MessageScroller from "../ui/message-scroller";
+import { backendPath } from "@/utils/backend-path";
 
 import { useGetUser } from "@/hooks/user/use-get-user";
 
@@ -11,12 +12,12 @@ type MessageProps = {
   message: MessageType;
 }
 
-const defaultProfilePicture = "http://localhost:3001/public/default_user.png";
+const defaultProfilePicture = backendPath("/public/default_user.png");
 
 export function Message(props: MessageProps) {
   const user = useGetUser();
   const { message } = props;
-  const profilePicture = message.profile_picture ? `http://localhost:3001/public/${message.profile_picture}` : defaultProfilePicture;
+  const profilePicture = message.profile_picture ? backendPath(`/public/${message.profile_picture}`) : defaultProfilePicture;
   const isMyMessage = user.data?.id === message.sender;
 
   if (message.type === "image") {
