@@ -1,21 +1,31 @@
-# Next.js template
+# Chat App
 
-This is a Next.js template with shadcn/ui.
+Um chat simples que fiz com o objetivo de praticar o uso de **WebSockets** e aprender mais sobre o **Elysia**. A ideia do projeto foi explorar comunicação em tempo real e entender melhor como estruturar uma aplicação utilizando essas tecnologias.
 
-## Adding components
+## Rodando o projeto
 
-To add components to your app, run the following command:
+### Frontend
+
+Instale as dependências:
 
 ```bash
-npx shadcn@latest add button
+bun install
 ```
 
-This will place the ui components in the `components` directory.
+Depois inicie o projeto normalmente.
 
-## Using components
+### Backend
 
-To use the components in your app, import them as follows:
+Inicie o servidor com:
 
-```tsx
-import { Button } from "@/components/ui/button";
+```bash
+bun run elysia
+```
+
+## Variáveis de ambiente
+
+Antes de iniciar o frontend, crie um arquivo `.env` na raiz do projeto com o seguinte conteúdo:
+
+```env
+NEXT_PUBLIC_BACKEND_URL=http://localhost:3001
 ```
