@@ -20,6 +20,7 @@ export default function Page() {
 
   const [open, setOpen] = React.useState<boolean>(false);
   const [username, setUsername] = React.useState<string>("");
+  const [profilePicture, setProfilePicture] = React.useState<File | null>(null);
 
   const handleSetUser = () => {
     const trimmedUsername = username.trim();
@@ -27,7 +28,7 @@ export default function Page() {
       alert("username cannot be empty");
       return;
     }
-    setUser.mutate(username, {
+    setUser.mutate({ username: trimmedUsername, profilePicture }, {
       onError: () => {
         console.error("Failed to set user");
       },
@@ -73,6 +74,7 @@ export default function Page() {
           </Dialog.Header>
           <div>
             <Input value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Digite seu nome de usuário" />
+            <Input type="file" accept="image/*" onChange={(e) => setProfilePicture(e.target.files ? e.target.files[0] : null)} />
           </div>
           <Dialog.Footer>
             <Button type="button" onClick={handleSetUser}>

@@ -19,6 +19,7 @@ export function useSendMessage() {
         type: "text",
         name: user.data?.username || "Unknown",
         sender: user.data?.id || "",
+        profile_picture: user.data?.profilePicture || null,
       })
       return response.data
     },

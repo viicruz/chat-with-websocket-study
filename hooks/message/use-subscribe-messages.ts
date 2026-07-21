@@ -38,6 +38,7 @@ export function useSubscribeMessages(userId: string) {
               content: message.data.content,
               type: message.data.type,
               name: message.data.name,
+              profile_picture: message.data.profile_picture || "/public/default_user.png",
             },
           ]
         }

@@ -8,6 +8,7 @@ export function useGetUser() {
     queryKey: ["username"],
     queryFn: async () => {
       const username = localStorage.getItem("username")
+      const profilePicture = localStorage.getItem("profilePicture")
       if (!username) {
         return null;
       }
@@ -17,7 +18,8 @@ export function useGetUser() {
       }
       return {
         id: userId,
-        username
+        username,
+        profilePicture
       }
     }
   });

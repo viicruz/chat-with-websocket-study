@@ -11,10 +11,12 @@ type MessageProps = {
   message: MessageType;
 }
 
+const defaultProfilePicture = "http://localhost:3001/public/default_user.png";
+
 export function Message(props: MessageProps) {
   const user = useGetUser();
   const { message } = props;
-  const profilePicture = message.profile_picture || "http://localhost:3001/public/default_user.png";
+  const profilePicture = message.profile_picture ? `http://localhost:3001/public/${message.profile_picture}` : defaultProfilePicture;
   const isMyMessage = user.data?.id === message.sender;
 
   if (message.type === "image") {
