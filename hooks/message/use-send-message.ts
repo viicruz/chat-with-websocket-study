@@ -17,6 +17,7 @@ export function useSendMessage() {
       const response = await apiClient["send-message"].post({
         content: message,
         type: "text",
+        name: user.data?.username || "Unknown",
         sender: user.data?.id || "",
       })
       return response.data

@@ -20,7 +20,7 @@ const app = new Elysia()
       console.log("Received message:", request.body.content)
       const message: Message = {
         id: Date.now().toString(),
-        name: "Victor",
+        name: request.body.name,
         sender: request.body.sender,
         content: request.body.content,
         type: request.body.type,
@@ -39,6 +39,7 @@ const app = new Elysia()
       body: z.object({
         content: z.string().min(1, "Message cannot be empty"),
         type: z.enum(["text", "image", "audio"]),
+        name: z.string().min(1, "Name cannot be empty"),
         sender: z.string(),
       }),
     }
